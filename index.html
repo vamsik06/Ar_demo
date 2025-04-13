@@ -57,19 +57,13 @@
 
           // Create 5 pods
           for (let i = 0; i < 5; i++) {
-            const pod = document.createElement('a-entity');
-            pod.setAttribute('gltf-model', '#pod-model');
+            const pod = document.createElement('a-box');
+            pod.setAttribute('color', '#4CC3D9');
             pod.setAttribute('position', `${i - 2} 0.5 0`);
-            pod.setAttribute('rotation', '-90 0 0');
-            pod.setAttribute('scale', '0.5 0.5 0.5');
+            pod.setAttribute('depth', '0.3');
+            pod.setAttribute('height', '0.5');
+            pod.setAttribute('width', '0.3');
             pod.setAttribute('id', `box${i}`);
-            pod.setAttribute('animation__glow', {
-              property: 'components.material.material.emissiveIntensity',
-              dir: 'alternate',
-              dur: 1000,
-              loop: true,
-              to: 1
-            });
             arrayContainer.appendChild(pod);
           }
 
