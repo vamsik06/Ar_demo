@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AR Array Scanner</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <a-scene embedded arjs>
+      <a-assets>
+        <audio id="click-sound" src="https://cdn.glitch.global/3c1e4052-fd10-4a4f-96e3-e86f2d58b9a1/click.mp3?v=1706360207020"></audio>
+        <a-asset-item id="pod-model" src="https://cdn.glitch.global/3c1e4052-fd10-4a4f-96e3-e86f2d58b9a1/pod.glb?v=1706360207020"></a-asset-item>
+      </a-assets>
+
+      <a-marker preset="hiro">
+        <a-entity id="welcome-text" position="0 1 0">
+          <a-text value="Let's Create Array Together" color="#00ffff" align="center" width="3"></a-text>
+        </a-entity>
+
+        <a-plane id="create-array-btn" color="#1E90FF" position="0 0.5 0" width="1.5" height="0.5" class="clickable">
+          <a-text value="Create Array" align="center" position="0 0 0.1" width="2"></a-text>
+        </a-plane>
+
+        <a-entity id="array-container" visible="false"></a-entity>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const createBtn = document.querySelector('#create-array-btn');
+        const arrayContainer = document.querySelector('#array-container');
+
+        createBtn.addEventListener('click', () => {
+          document.querySelector('#welcome-text').setAttribute('visible', false);
+          createBtn.setAttribute('visible', false);
+          arrayContainer.setAttribute('visible', true);
+
+          // Create 5 pods
+          for (let i = 0; i < 5; i++) {
+            const pod = document.createElement('a-entity');
+            pod.setAttribute('gltf-model', '#pod-model');
+            pod.setAttribute('position', `${i - 2} 0 0`);
+            pod.setAttribute('scale', '0.5 0.5 0.5');
+            pod.setAttribute('id', `box${i}`);
+            pod.setAttribute('animation__glow', {
+              property: 'components.material.material.emissiveIntensity',
+              dir: 'alternate',
+              dur: 1000,
+              loop: true,
+              to: 1
+            });
+            arrayContainer.appendChild(pod);
+          }
+
+          // Show Index Button
+          const indexBtn = document.createElement('a-plane');
+          indexBtn.setAttribute('id', 'show-indexes-btn');
+          indexBtn.setAttribute('color', '#FFA500');
+          indexBtn.setAttribute('position', '0 -0.5 0');
+          indexBtn.setAttribute('width', '1.5');
+          indexBtn.setAttribute('height', '0.5');
+          indexBtn.setAttribute('class', 'clickable');
+
+          const indexBtnText = document.createElement('a-text');
+          indexBtnText.setAttribute('value', 'Show Indexes');
+          indexBtnText.setAttribute('align', 'center');
+          indexBtnText.setAttribute('position', '0 0 0.1');
+          indexBtnText.setAttribute('width', '2');
+
+          indexBtn.appendChild(indexBtnText);
+          arrayContainer.appendChild(indexBtn);
+
+          indexBtn.addEventListener('click', () => {
+            for (let i = 0; i < 5; i++) {
+              const indexText = document.createElement('a-text');
+              indexText.setAttribute('value', `${i}`);
+              indexText.setAttribute('position', `${i - 2} -0.4 0`);
+              indexText.setAttribute('color', '#ff0');
+              indexText.setAttribute('align', 'center');
+              indexText.setAttribute('animation', 'property: position; from: 0 -1 0; to: 0 -0.4 0; dur: 500');
+              arrayContainer.appendChild(indexText);
+
+              const val = Math.floor(Math.random() * 50);
+              const valText = document.createElement('a-text');
+              valText.setAttribute('value', `${val}`);
+              valText.setAttribute('position', `${i - 2} 0 0.2`);
+              valText.setAttribute('color', '#00ff00');
+              valText.setAttribute('align', 'center');
+              valText.setAttribute('class', 'clickable');
+              valText.setAttribute('id', `valText${i}`);
+              valText.setAttribute('sound', 'on: click; src: #click-sound');
+              arrayContainer.appendChild(valText);
+
+              valText.addEventListener('click', () => {
+                alert(`You clicked value: ${val}`);
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
