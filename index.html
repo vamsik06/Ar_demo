@@ -18,7 +18,7 @@
     <a-scene
       vr-mode-ui="enabled: false"
       embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
       renderer="logarithmicDepthBuffer: true;"
     >
       <a-assets>
@@ -26,7 +26,7 @@
         <a-asset-item id="pod-model" src="https://cdn.glitch.global/3c1e4052-fd10-4a4f-96e3-e86f2d58b9a1/pod.glb?v=1706360207020"></a-asset-item>
       </a-assets>
 
-      <a-marker preset="hiro">
+      <a-marker type="pattern" url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/aframe/examples/marker-training/examples/pattern-files/pattern-hiro.patt">
         <a-entity id="welcome-text" position="0 1 0">
           <a-text value="Let's Create Array Together" color="#00ffff" align="center" width="3"></a-text>
         </a-entity>
