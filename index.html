@@ -9,7 +9,7 @@
     </style>
   </head>
   <body>
-    <a-scene embedded arjs>
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;'>
       <a-assets>
         <audio id="click-sound" src="https://cdn.glitch.global/3c1e4052-fd10-4a4f-96e3-e86f2d58b9a1/click.mp3?v=1706360207020"></audio>
         <a-asset-item id="pod-model" src="https://cdn.glitch.global/3c1e4052-fd10-4a4f-96e3-e86f2d58b9a1/pod.glb?v=1706360207020"></a-asset-item>
@@ -27,7 +27,11 @@
         <a-entity id="array-container" visible="false"></a-entity>
       </a-marker>
 
-      <a-entity camera></a-entity>
+      <a-entity cursor="fuse: false; rayOrigin: mouse"
+                raycaster="objects: .clickable"
+                position="0 0 0"
+                camera look-controls>
+      </a-entity>
     </a-scene>
 
     <script>
