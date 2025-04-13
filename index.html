@@ -35,7 +35,7 @@
           <a-text value="Create Array" align="center" position="0 0 0.1" width="2"></a-text>
         </a-plane>
 
-        <a-entity id="array-container" visible="false"></a-entity>
+        <a-entity id="array-container" visible="false" position="0 0 0"></a-entity>
       </a-marker>
 
       <!-- ✅ Camera moved outside the marker -->
@@ -59,7 +59,8 @@
           for (let i = 0; i < 5; i++) {
             const pod = document.createElement('a-entity');
             pod.setAttribute('gltf-model', '#pod-model');
-            pod.setAttribute('position', `${i - 2} 0 0`);
+            pod.setAttribute('position', `${i - 2} 0.5 0`);
+            pod.setAttribute('rotation', '-90 0 0');
             pod.setAttribute('scale', '0.5 0.5 0.5');
             pod.setAttribute('id', `box${i}`);
             pod.setAttribute('animation__glow', {
